@@ -9,7 +9,8 @@
 # CF当前平均每股的现金流，可查到
 # rise_year为现金流的年增长率，可以预测
 class guzhi:
-    def __init__(self, R=None, g=None, CF=None, rise_year=None, name=None, zzn=None,PE=None,EPS=None,LIRUN=None,LIRUN_R=None,XIANJIN_R=None,XIANJIN_RR=None):
+    def __init__(self, R=None, g=None, CF=None, rise_year=None, name=None, zzn=None, PE=None, EPS=None, LIRUN=None,
+                 LIRUN_R=None, XIANJIN_R=None, XIANJIN_RR=None):
         self.R = R
         self.g = g
         self.CF = CF
@@ -17,12 +18,12 @@ class guzhi:
         self.ten = None
         self.name = name
         self.zzn = zzn
-        self.PE=PE
-        self.EPS=EPS
-        self.LIRUN=LIRUN
-        self.LIRUN_R=LIRUN_R
-        self.XIANJIN_R=XIANJIN_R
-        self.XIANJIN_RR=XIANJIN_RR
+        self.PE = PE
+        self.EPS = EPS
+        self.LIRUN = LIRUN
+        self.LIRUN_R = LIRUN_R
+        self.XIANJIN_R = XIANJIN_R
+        self.XIANJIN_RR = XIANJIN_RR
 
     def calc_jinglirun(self):
         sum1 = 0
@@ -76,39 +77,40 @@ class guzhi:
         print("<{0}>".format(self.name))
         print("# 当前每股现金流为{0}".format(self.CF))
         print("# 平均每股现金净增加额为{0}".format(self.XIANJIN_R))
-        print("# 当前每股净利润为{0},增长率为{1}".format(self.LIRUN,self.LIRUN_R))
+        print("# 当前每股净利润为{0},增长率为{1}".format(self.LIRUN, self.LIRUN_R))
         print("# 预测未来十年内的平均折现率为{0}，这个数据越大，折算到现在股票的价值就越低，与股票价值呈负相关性".format(self.R))
         print("# 预测未来十年之后的平均现金流增长率为{0}，这个数据肯定小于g，而且这个数据越大，折算到现在股票价值就会越高，与股票价值呈正相关性".format(self.g))
         print("# 预测未来10年现金流增长率为{0},这个数据越大股票未来的价值越大，折算到现在股票的价值就越高，与当前股票价值呈正相关性".format(self.ry))
         print("# 永续年金折算到当前到价值为{0}".format(format(sum2, '.2f')))
         print("# 十年内的现金流折现到当前年份的总和为 {0}".format(s))
         print("=============")
-        PEG=self.PE/self.EPS
-        print("# EPS的值为{0},大于1代表高估".format(format(PEG,'.2f')))
-        heliPE=EPS*2+1/self.R
-        print("# 当前合理PE应该为{0}".format(format(heliPE,'.2f')))
+        PEG = self.PE / self.EPS
+        print("# PEG的值为{0},大于1代表高估".format(format(PEG, '.2f')))
+        heliPE = EPS * 2 + 1 / self.R
+        print("# 当前合理PE应该为{0}".format(format(heliPE, '.2f')))
         print("# 所有现金流折现到今天后一股的价值为{0}".format(format(sum1 + sum2, '.2f')))
         self.calc_jinglirun()
         self.calc_xianjinjingzengjia()
 
 
-
-
 if __name__ == '__main__':
-    name = "五粮液"  # 股票名称
-    zzn = 10  # 预测公司会保持这样到增长率几年
+    name = "泸州老窖"  # 股票名称
+    zzn = 7  # 预测公司会保持这样到增长率几年
     R = 0.09  # 折现率
     g = 0.01  # 10年后的现金流/净利润 增长率
 
-    PE = 41    # 当前市盈率
-    EPS = 10  # 净利润增长率
-    CF = 50.97  # 当前平均每股现金流
-    zengzhanglv = 0.16  # 从今天往未来看10年内每股现金流的增长率
-    LIRUN = 41.47 # 每股净利润
-    LIRUN_R = 0.16 #每股净利润增长率
-    XIANJIN_R = 25.39 # 每股现金净增加额
-    XIANJIN_RR = 0.22 # 每股净现金增长率
+    PE = 15.06  # 当前市盈率
 
-    a = guzhi(rise_year=zengzhanglv, CF=CF, R=R, g=g, name=name, zzn=zzn,EPS=EPS,PE=PE,LIRUN=LIRUN,LIRUN_R=LIRUN_R,XIANJIN_R=XIANJIN_R,XIANJIN_RR=XIANJIN_RR)
+    CF = 1.62  # 当前平均每股现金流
+    zengzhanglv = 0.122  # 从今天往未来看10年内每股现金流的增长率
+    LIRUN = 1.47  # 每股净利润
+    LIRUN_R = 0.244  # 每股净利润增长率
+    XIANJIN_R = 0.07  # 每股现金净增加额
+    XIANJIN_RR = 0.286  # 每股净现金增长率
+
+
+    EPS = LIRUN_R * 100  # 净利润增长率
+
+    a = guzhi(rise_year=zengzhanglv, CF=CF, R=R, g=g, name=name, zzn=zzn, EPS=EPS, PE=PE, LIRUN=LIRUN, LIRUN_R=LIRUN_R,
+              XIANJIN_R=XIANJIN_R, XIANJIN_RR=XIANJIN_RR)
     a.calc()
-
