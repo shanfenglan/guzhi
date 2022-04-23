@@ -99,14 +99,19 @@ if __name__ == '__main__':
     R = 0.09  # 折现率
     g = 0.01  # 10年后的现金流/净利润 增长率
 
-    PE = 15.06  # 当前市盈率
+    PE = 27.62  # 当前市盈率
 
-    CF = 1.62  # 当前平均每股现金流
-    zengzhanglv = 0.122  # 从今天往未来看10年内每股现金流的增长率
-    LIRUN = 1.47  # 每股净利润
-    LIRUN_R = 0.244  # 每股净利润增长率
-    XIANJIN_R = 0.07  # 每股现金净增加额
+    CF = 1.4100  # 当前平均每股现金流
+    zengzhanglv = 0.09  # 从今天往未来看10年内每股现金流的增长率
+
+    LIRUN = 1.31  # 每股净利润
+    LIRUN_R = 0.09  # 每股净利润增长率
+
+    XIANJIN_R = 0.85  # 每股现金净增加额
     XIANJIN_RR = 0.286  # 每股净现金增长率
+
+    jyxjl = [10, 11, 12]  # 经营现金流
+    b = [10, 12, 12]      # 总营收
 
 
     EPS = LIRUN_R * 100  # 净利润增长率
@@ -114,3 +119,12 @@ if __name__ == '__main__':
     a = guzhi(rise_year=zengzhanglv, CF=CF, R=R, g=g, name=name, zzn=zzn, EPS=EPS, PE=PE, LIRUN=LIRUN, LIRUN_R=LIRUN_R,
               XIANJIN_R=XIANJIN_R, XIANJIN_RR=XIANJIN_RR)
     a.calc()
+
+    print("--------------------------")
+    print("经营现金流与总营收的比")
+    d = 0
+    for i in range(len(jyxjl)):
+        c = jyxjl[i] / b[i]
+        d+=c
+        print(format(c,'.2f'))
+    print("平均数为："+format(d/len(jyxjl),'.2f'))
