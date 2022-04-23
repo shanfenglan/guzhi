@@ -10,7 +10,7 @@
 # rise_year为现金流的年增长率，可以预测
 class guzhi:
     def __init__(self, R=None, g=None, CF=None, rise_year=None, name=None, zzn=None, PE=None, EPS=None, LIRUN=None,
-                 LIRUN_R=None, XIANJIN_R=None, XIANJIN_RR=None):
+                 LIRUN_R=None, XIANJIN_R=None, XIANJIN_RR=None,gujia=None):
         self.R = R
         self.g = g
         self.CF = CF
@@ -24,6 +24,7 @@ class guzhi:
         self.LIRUN_R = LIRUN_R
         self.XIANJIN_R = XIANJIN_R
         self.XIANJIN_RR = XIANJIN_RR
+        self.gujia=gujia
 
     def calc_jinglirun(self):
         sum1 = 0
@@ -37,8 +38,8 @@ class guzhi:
         # sum2为永续年金折现到现在的金额
         sum2 = self.ten * (1 + self.g) / (self.R - self.g)
         sum2 = sum2 / (1 + self.R) ** 10
-        print("# 所有净利润流折现到今天后一股的价值为{0}".format(format(sum1 + sum2, '.2f')))
-
+        print("# 所有净利润流折现到今天后一股的价值为{0}，对应市盈率为{1}".format(format(sum1 + sum2, '.2f'),format((sum1 + sum2)/self.LIRUN, '.2f')))
+        print("# 价值与价格的比值为 {0}，越大越好".format(format((sum1 + sum2)/self.gujia, '.2f')))
     def calc_xianjinjingzengjia(self):
         sum1 = 0
         for i in range(self.zzn):
@@ -95,36 +96,38 @@ class guzhi:
 
 if __name__ == '__main__':
     name = "泸州老窖"  # 股票名称
-    zzn = 7  # 预测公司会保持这样到增长率几年
+    zzn = 10  # 预测公司会保持这样到增长率几年
     R = 0.09  # 折现率
-    g = 0.01  # 10年后的现金流/净利润 增长率
+    g = 0.03  # 10年后的现金流/净利润 增长率
 
     PE = 27.62  # 当前市盈率
 
-    CF = 1.4100  # 当前平均每股现金流
+    gujia= 24.8 #当前股价
+
+    CF = 2.53  # 当前平均每股现金流
     zengzhanglv = 0.09  # 从今天往未来看10年内每股现金流的增长率
 
-    LIRUN = 1.31  # 每股净利润
-    LIRUN_R = 0.09  # 每股净利润增长率
+    LIRUN = 32.80  # 每股净利润
+    LIRUN_R = 0.13  # 每股净利润增长率
 
-    XIANJIN_R = 0.85  # 每股现金净增加额
-    XIANJIN_RR = 0.286  # 每股净现金增长率
+    XIANJIN_R = 44.37  # 每股现金净增加额
+    XIANJIN_RR = 0.13  # 每股净现金增长率
 
-    jyxjl = [10, 11, 12]  # 经营现金流
-    b = [10, 12, 12]      # 总营收
+    jyxjl = [640.29,	516.69,	452.11,	413.85,	221.53]  # 经营现金流
+    b = [1094.64,	979.93,	888.54,	771.99,	610.63]      # 总营收
 
 
     EPS = LIRUN_R * 100  # 净利润增长率
 
     a = guzhi(rise_year=zengzhanglv, CF=CF, R=R, g=g, name=name, zzn=zzn, EPS=EPS, PE=PE, LIRUN=LIRUN, LIRUN_R=LIRUN_R,
-              XIANJIN_R=XIANJIN_R, XIANJIN_RR=XIANJIN_RR)
+              XIANJIN_R=XIANJIN_R, XIANJIN_RR=XIANJIN_RR,gujia=gujia)
     a.calc()
-
     print("--------------------------")
     print("经营现金流与总营收的比")
     d = 0
     for i in range(len(jyxjl)):
         c = jyxjl[i] / b[i]
         d+=c
-        print(format(c,'.2f'))
-    print("平均数为："+format(d/len(jyxjl),'.2f'))
+        print(format(c,'.3f'))
+    print("平均数为："+format(d/len(jyxjl),'.3f'))
+
