@@ -37,3 +37,8 @@
 # 十年内的现金流折现到当前年份的总和为 21.14
 # 所有现金流折现到今天后一股的价值为44.34
 ```
+
+<img width="1100" alt="image" src="https://user-images.githubusercontent.com/49781523/184803260-b1c078da-93db-4c24-94a5-c5daeb58b222.png">
+
+
+
